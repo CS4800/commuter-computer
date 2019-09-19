@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Col,
-  Row,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText
-} from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
 import Results from '../Results';
 
-export class CommCalc extends Component {
+export class ComCalc extends Component {
   state = {
     homeAddr: '',
     remoteAddr: '',
@@ -26,13 +17,13 @@ export class CommCalc extends Component {
   formChange = e => {
     // prevent NaN error when returning empty value to float type
     var value = e.target.value;
-    if (e.target.value == 'number' && !value) value = 0;
+    if (e.target.value === 'number' && !value) value = 0;
 
     this.setState({ [e.target.id]: value });
   };
 
   getResults = () => {
-    axios.post('/api/calc', this.state).then(res => {
+    axios.post('/api/com-calc', this.state).then(res => {
       this.setState({ hasResponse: true, data: res.data });
     });
   };
@@ -115,4 +106,4 @@ export class CommCalc extends Component {
   }
 }
 
-export default CommCalc;
+export default ComCalc;

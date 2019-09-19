@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
     workHours: req.body.workHours
   };
 
-  console.log('\nServer received post request at /calc/');
+  console.log('\nServer received post request at /api/com-calc');
   console.log('data:', state);
   console.log('Server ending back response');
   feedback = {

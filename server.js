@@ -1,7 +1,8 @@
 const express = require('express'); // server connection
 const mongoose = require('mongoose'); // mongodb connection
 const bodyParser = require('body-parser'); // parses post requests
-const defaultApi = require('./routes/api/calc'); // example api
+const comCalc = require('./routes/api/com-calc'); // example api
+const users = require('./routes/api/users');
 
 // mongodb connection
 const db = require('./config/keys').mongoURI;
@@ -17,7 +18,10 @@ const app = express();
 app.use(bodyParser.json());
 
 // use routes
-app.use('/api/calc', defaultApi);
+app.use('/api/com-calc', comCalc);
+
+// team members api for assignment 3
+app.use('/api/users', users);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port ${port}...`));
