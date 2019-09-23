@@ -8,8 +8,12 @@ const users = [
     description: 'Team member of Baseball Caps for CS4800'
   },
   {
-    name:'Michael Ackerman',
+    name: 'Michael Ackerman',
     description: 'hi, im mac'
+  },
+  {
+    name: 'Youngjun Woo',
+    description: 'Hi, this is Youngjun Woo'
   }
 ];
 
@@ -33,6 +37,14 @@ router.get('/thuan', (req, res) => {
 // @access  Public
 router.get('/mac', (req, res) => {
   let user = users.find(u => u['name'] == 'Michael Ackerman');
+  res.json(user);
+});
+
+// @route   GET api
+// @desc    return specific user: mac
+// @access  Public
+router.get('/youngjun', (req, res) => {
+  let user = users.find(u => u['name'] == 'Youngjun Woo');
   res.json(user);
 });
 
