@@ -14,6 +14,10 @@ const users = [
   {
     name: 'Youngjun Woo',
     description: 'Hi, this is Youngjun Woo'
+  },
+  {
+    name: 'Kevin Young',
+    description: 'Baseball Caps member'
   }
 ];
 
