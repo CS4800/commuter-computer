@@ -17,7 +17,7 @@ const users = [
   },
   {
     name: 'Kevin Young',
-    description: 'Baseball Caps member'
+    description: 'Member of team Baseball Caps'
   }
 ];
 
