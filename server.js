@@ -4,6 +4,10 @@ const bodyParser = require('body-parser'); // parses post requests
 const moment = require('moment'); // improves time and date functionality
 const comCalc = require('./routes/api/com-calc'); // example api
 const users = require('./routes/api/users');
+// we currently do not have an api key yet, and we probably shouldn't hard code itanyway
+// const googleMapsClient = require('@google/maps').createClient({
+//  key: 'your API key here'
+// });
 
 // mongodb connection
 const db = require('./config/keys').mongoURI;

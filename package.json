@@ -21,6 +21,7 @@
   "author": "Kevin Young, Michael Ackerman, Thuan Tang, Youngjun Woo",
   "license": "ISC",
   "dependencies": {
+    "@google/maps": "^1.0.1",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.2",
     "express": "^4.17.1",
