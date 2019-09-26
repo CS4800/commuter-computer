@@ -2,6 +2,7 @@ const express = require('express'); // server connection
 const mongoose = require('mongoose'); // mongodb connection
 const bodyParser = require('body-parser'); // parses post requests
 const moment = require('moment'); // improves time and date functionality
+const axios = require('axios').default;
 const comCalc = require('./routes/api/com-calc'); // example api
 const users = require('./routes/api/users');
 // we currently do not have an api key yet, and we probably shouldn't hard code itanyway
@@ -33,5 +34,4 @@ var time = moment(date).format();
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server started on port ${port} at ${time}...`);
-  
 });
