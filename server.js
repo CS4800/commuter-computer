@@ -37,6 +37,6 @@ app.listen(port, () => {
 
   // Axios example of HTTP Calls
   axios
-    .get('http://localhost:5000/routes/api/users')
-    .then(res => console.log(res.data));
+    .get('http://google.com')
+    .then(res => console.log('Data response from google', res.data));
 });
