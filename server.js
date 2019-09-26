@@ -2,6 +2,7 @@ const express = require('express'); // server connection
 const mongoose = require('mongoose'); // mongodb connection
 const bodyParser = require('body-parser'); // parses post requests
 const moment = require('moment'); // improves time and date functionality
+const path = require('path');
 const comCalc = require('./routes/api/com-calc'); // example api
 const users = require('./routes/api/users');
 // we currently do not have an api key yet, and we probably shouldn't hard code itanyway
@@ -30,8 +31,17 @@ app.use('/api/users', users);
 
 var date = new Date();
 var time = moment(date).format();
+
+// serve static files from the build folder
+app.use(express.static(path.join(__dirname, 'build')));
+
+// server the home page from the root url.
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server started on port ${port} at ${time}...`);
-  
+
 });
