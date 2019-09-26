@@ -47,8 +47,16 @@ router.get('/mac', (req, res) => {
 // @route   GET api
 // @desc    return specific user: mac
 // @access  Public
+router.get('/kevin', (req, res) => {
+  let user = users.find(u => u['name'] == 'Michael Ackerman');
+  res.json(user);
+});
+
+// @route   GET api
+// @desc    return specific user: mac
+// @access  Public
 router.get('/youngjun', (req, res) => {
-  let user = users.find(u => u['name'] == 'Youngjun Woo');
+  let user = users.find(u => u['name'] == 'Kevin Young');
   res.json(user);
 });
 
