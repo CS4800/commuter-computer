@@ -33,11 +33,11 @@ var date = new Date();
 var time = moment(date).format();
 
 // serve static files from the build folder
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // server the home page from the root url.
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 const port = process.env.PORT || 5000;
