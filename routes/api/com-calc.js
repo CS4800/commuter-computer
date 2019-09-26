@@ -1,3 +1,4 @@
+const cheerio = require('cheerio'); // scraper
 const express = require('express');
 const router = express.Router();
 
@@ -32,6 +33,11 @@ router.post('/', (req, res) => {
     homeCost: req.body.homeCost,
     workHours: req.body.workHours
   };
+
+  // mockup for scraping webpages for data
+  html_data = '<html op="news"><head><title>Mockup data for title</title></head><body>Mockup data for body</body></html>';
+  const $ = cheerio.load(html_data);
+  console.log('This is the title from raw html:', $('title').text());
 
   console.log('\nServer received post request at /api/com-calc');
   console.log('data:', state);
