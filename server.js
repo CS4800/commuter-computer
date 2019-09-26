@@ -1,6 +1,7 @@
 const express = require('express'); // server connection
 const mongoose = require('mongoose'); // mongodb connection
 const bodyParser = require('body-parser'); // parses post requests
+const moment = require('moment'); // improves time and date functionality
 const comCalc = require('./routes/api/com-calc'); // example api
 const users = require('./routes/api/users');
 
@@ -23,5 +24,10 @@ app.use('/api/com-calc', comCalc);
 // team members api for assignment 3
 app.use('/api/users', users);
 
+var date = new Date();
+var time = moment(date).format();
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server started on port ${port}...`));
+app.listen(port, () => {
+  console.log(`Server started on port ${port} at ${time}...`);
+  
+});
