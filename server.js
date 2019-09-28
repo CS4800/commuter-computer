@@ -23,8 +23,8 @@ app.use('/api/com-calc', comCalc);
 // serve static files from the build folder
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-// server the home page from the root url.
-app.get('/', (req, res) =>
+// serve all client routes to React's entry point
+app.get(['/', '/about'], (req, res) =>
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 );
 
