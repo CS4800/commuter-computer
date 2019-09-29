@@ -35,10 +35,12 @@ router.post('/', (req, res) => {
 
   console.log('\nServer received post request at /api/com-calc');
   console.log('data:', state);
-  console.log('Server ending back response');
+  console.log('Server sending back response');
+
   feedback = {
     optimalCost: 'GOOD TO COMMUTE'
   };
+
   res.json(feedback);
 });
 

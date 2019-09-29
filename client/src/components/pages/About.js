@@ -2,8 +2,6 @@ import React from 'react';
 
 function About() {
   return (
-    // use React.Fragment when we don't need to put inside div
-    // but JSX requires a tag so hence React.Fragment
     <React.Fragment>
       <h1>About</h1>
       <p>

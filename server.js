@@ -29,9 +29,7 @@ app.get(['/', '/about'], (req, res) =>
 );
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server started on port ${port} at ${time}...`);
-});
+app.listen(port, () => console.log(`Server started on port ${port}...`));
 
 /*******************************************************************************
  * Assignment code blow
@@ -46,17 +44,18 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 // http users api for assignment 3
-app.use('/api/users', users); 
+app.use('/api/users', users);
 
 // Cheerio api
 // mockup for scraping webpages for data
-html_data = '<html op="news"><head><title>Mockup data for title</title></head><body>Mockup data for body</body></html>';
+html_data = '<html><head><title>Mockup data for title</title></head></html>';
 const $ = cheerio.load(html_data);
 console.log('This is the title from raw html:', $('title').text());
 
 // Moment api
 var date = new Date();
 var time = moment(date).format();
+console.log('Current time is', time);
 
 // Axios example of HTTP Calls
 axios
