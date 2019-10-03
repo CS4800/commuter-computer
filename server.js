@@ -4,6 +4,10 @@ const bodyParser = require('body-parser'); // parses post requests
 const path = require('path'); // server path
 const comCalc = require('./routes/api/com-calc'); // commuter calculator
 
+// Download Zillow rent csv files and get latest rent
+const zillowRent = require('./routes/api/zillow-rent'); // zillow rent data
+zillowRent().then(r => console.log('Zillow rent data\n', r));
+
 // mongodb connection
 const db = require('./config/keys').mongoURI;
 mongoose
@@ -34,9 +38,9 @@ app.listen(port, () => console.log(`Server started on port ${port}...`));
 /*******************************************************************************
  * Assignment code blow
  ******************************************************************************/
-const axios = require('axios');              // ajax calls
-const cheerio = require('cheerio');          // web scraper
-const moment = require('moment');            // datetime
+const axios = require('axios'); // ajax calls
+const cheerio = require('cheerio'); // web scraper
+const moment = require('moment'); // datetime
 const users = require('./routes/api/users'); // users api
 // we currently do not have an api key yet, and we probably shouldn't hard code itanyway
 const googleMapsClient = require('@google/maps').createClient({
