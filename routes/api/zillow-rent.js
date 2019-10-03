@@ -3,7 +3,6 @@ const csvjson = require('csvjson');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-const cheerio = require('cheerio');
 
 // download zillow rent files to file system
 // @param url - url to download

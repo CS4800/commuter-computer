@@ -13,9 +13,9 @@ class App extends Component {
     formData: {
       homeAddr: '',
       remoteAddr: '',
-      income: 0,
-      homeCost: 0,
-      workHours: 0,
+      income: '',
+      homeCost: '',
+      workHours: '',
       data: null
     }
   };
@@ -24,7 +24,7 @@ class App extends Component {
     let { name, value } = e.target;
 
     // prevent NaN error when returning empty value to float type
-    if (e.target.value === 'number' && !value) value = 0;
+    if (e.target.type === 'number' && !value) value = '';
 
     this.formUpdate({ name: name, value: value });
   };
@@ -48,7 +48,7 @@ class App extends Component {
           <Container>
             <Switch>
               <Route path='/about'>
-                <About/>
+                <About />
               </Route>
               <Route path='/'>
                 <ComCalc
