@@ -6,16 +6,16 @@ const url = require('url');
 
 // download zillow rent files to file system
 // @param url - url to download
-// @param path - path of file to save to file system
+// @param fpath - path of file to save to file system
 // return Promise - resolve when successful download return file path,
 //                  reject when fails
-function dlZillowRentalCSV(url, path) {
+function dlZillowRentalCSV(url, fpath) {
   return new Promise((resolve, reject) => {
     axios
       .get(url)
       .then(res => {
-        fs.writeFileSync(path, res.data);
-        resolve(path);
+        fs.writeFileSync(fpath, res.data);
+        resolve(fpath);
       })
       .catch(e => reject(`Failed to download Zillow data (${url}): ${e}`));
   });
@@ -59,15 +59,20 @@ function readZillowData(files) {
 // download zillow files and parse them to get pomona rent for latest month
 // return Promise - resolves with array of zillow rent data
 async function zillowRent() {
+  const dir = 'resources';
   const baseUrl = 'http://files.zillowstatic.com/research/public/City/';
   const files = [
     'City_MedianRentalPrice_1Bedroom.csv',
     'City_MedianRentalPrice_2Bedroom.csv'
   ];
 
+  // create 'resources' directory if not exist
+  if (!fs.existsSync(path.join(__dirname, dir)))
+    fs.mkdirSync(path.join(__dirname, dir));
+
   // create url and file paths array
   const downloads = files.map(f => ({
-    path: path.join(__dirname, 'resources', f),
+    path: path.join(__dirname, dir, f),
     url: url.resolve(baseUrl, f)
   }));
 
