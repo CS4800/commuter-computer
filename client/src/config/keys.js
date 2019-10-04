@@ -1,4 +1,4 @@
 // set client keys here
 module.exports = {
-  googleMapsJSKey: ''
+  googleMapsJSKey: 'AIzaSyBQM84Y2vvD9ydxRWKzKgNriNgdk9iKqUU'
 };
