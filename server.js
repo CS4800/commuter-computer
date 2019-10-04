@@ -61,7 +61,8 @@ var date = new Date();
 var time = moment(date).format();
 console.log('Current time is', time);
 
-// Axios example of HTTP Calls
-axios
-  .get('http://google.com')
-  .then(res => console.log('Data response from google', res.data.slice(0, 15)));
+// Axios example of HTTP Calls with cheerio scraping
+axios.get('http://google.com').then(res => {
+  const $ = cheerio.load(res.data);
+  console.log('Cheerio scraping with axios:', $('title').text());
+});
