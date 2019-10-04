@@ -1,7 +1,9 @@
 import React from 'react';
-import { Col, Row, Form, FormGroup } from 'reactstrap';
 import axios from 'axios';
+import { Col, Row, Form, FormGroup } from 'reactstrap';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 
 export function FormData(props) {
@@ -12,9 +14,16 @@ export function FormData(props) {
     });
   };
 
+  const resetForm = e => {
+    const keys = Object.keys(props.formData);
+
+    for (let i = 0; i < keys.length; ++i)
+      props.formUpdate({ name: keys[i], value: '' });
+  };
+
   return (
     <React.Fragment>
-      <Form>
+      <Form onSubmit={getResults.bind(this)}>
         <FormGroup>
           <TextField
             type='text'
@@ -89,14 +98,29 @@ export function FormData(props) {
             </FormGroup>
           </Col>
         </Row>
-        <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          onClick={getResults.bind(this)}
-        >
-          Submit
-        </Button>
+        <Row form>
+          <Col>
+            <Button
+              type='submit'
+              variant='contained'
+              color='primary'
+              endIcon={<Icon>send</Icon>}
+            >
+              Calculate
+            </Button>
+          </Col>
+          <Col style={{ textAlign: 'right' }}>
+            <Button
+              type='reset'
+              variant='contained'
+              color='secondary'
+              startIcon={<DeleteIcon />}
+              onClick={resetForm.bind(this)}
+            >
+              Reset
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </React.Fragment>
   );
