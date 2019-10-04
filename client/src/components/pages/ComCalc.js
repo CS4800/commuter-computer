@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FormData from '../FormData';
 import Result from '../Result';
 
-export class ComCalc extends Component {
+class ComCalc extends Component {
   render() {
     return (
       <div>
@@ -15,6 +15,7 @@ export class ComCalc extends Component {
           formChange={this.props.formChange}
           formUpdate={this.props.formUpdate}
         />
+        <div className='mt-3'></div>
         <Result data={this.props.formData.data} />
       </div>
     );

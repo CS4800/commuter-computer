@@ -4,6 +4,7 @@ import { Container } from 'reactstrap';
 import AppNavbar from './components/layout/AppNavbar';
 import About from './components/pages/About';
 import ComCalc from './components/pages/ComCalc';
+import GoogleMap from './components/GoogleMap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -17,6 +18,10 @@ class App extends Component {
       homeCost: '',
       workHours: '',
       data: null
+    },
+    coords: {
+      cpp: { lat: 34.0589, lng: -117.8194 },
+      center: { lat: 34.0589, lng: -117.8194, zoom: 13 }
     }
   };
 
@@ -57,6 +62,8 @@ class App extends Component {
                   formChange={this.formChange}
                   formUpdate={this.formUpdate}
                 />
+                <div className='mt-5'></div>
+                <GoogleMap coords={this.state.coords} />
               </Route>
             </Switch>
           </Container>
