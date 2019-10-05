@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import FormData from '../FormData';
 import Result from '../Result';
 
@@ -23,5 +24,13 @@ class ComCalc extends Component {
     );
   }
 }
+
+ComCalc.propTypes = {
+  formData: PropTypes.object,
+  formChange: PropTypes.func,
+  formUpdate: PropTypes.func,
+  formReset: PropTypes.func,
+  formSubmit: PropTypes.func
+};
 
 export default ComCalc;

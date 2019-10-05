@@ -43,23 +43,8 @@ class App extends Component {
   formUpdate = (...values) => {
     let formData = this.state.formData;
 
-    for (let i = 0; i < values.length; ++i) {
-      const { name, value } = values[i];
-      formData[name] = value;
-    }
-
+    values.forEach(({ name, value }) => (formData[name] = value));
     this.setState({ formData: formData });
-  };
-
-  formSubmit = e => {
-    e.preventDefault();
-    axios.post('/api/com-calc', this.state.formData).then(res => {
-      this.formUpdate({ name: 'data', value: res.data });
-    });
-
-    googleGeocoder(this.state.formData.homeAddr)
-      .then(data => console.log(data))
-      .catch(e => console.log(e));
   };
 
   formReset = e => {
@@ -67,6 +52,23 @@ class App extends Component {
 
     for (let i = 0; i < keys.length; ++i)
       this.formUpdate({ name: keys[i], value: '' });
+  };
+
+  formSubmit = e => {
+    e.preventDefault();
+
+    let addrs = [this.state.formData.homeAddr, this.state.formData.remoteAddr];
+
+    Promise.all(addrs.map(addr => googleGeocoder(addr))).then(coords => {
+      this.formUpdate(
+        { name: 'homeCoord', value: coords[0] },
+        { name: 'remoteCoord', value: coords[1] }
+      );
+
+      axios.post('/api/com-calc', this.state.formData).then(res => {
+        this.formUpdate({ name: 'data', value: res.data });
+      });
+    });
   };
 
   render() {

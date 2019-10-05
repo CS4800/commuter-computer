@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Col, Row, Form, FormGroup } from 'reactstrap';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -108,5 +109,13 @@ function FormData(props) {
     </Form>
   );
 }
+
+FormData.propTypes = {
+  formData: PropTypes.object,
+  formChange: PropTypes.func,
+  formUpdate: PropTypes.func,
+  formReset: PropTypes.func,
+  formSubmit: PropTypes.func
+};
 
 export default FormData;
