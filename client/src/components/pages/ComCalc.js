@@ -14,6 +14,8 @@ class ComCalc extends Component {
           formData={this.props.formData}
           formChange={this.props.formChange}
           formUpdate={this.props.formUpdate}
+          formReset={this.props.formReset}
+          formSubmit={this.props.formSubmit}
         />
         <div className='mt-3'></div>
         <Result data={this.props.formData.data} />

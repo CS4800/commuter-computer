@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Col, Row, Form, FormGroup } from 'reactstrap';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -7,22 +6,8 @@ import SendIcon from '@material-ui/icons/Send';
 import TextField from '@material-ui/core/TextField';
 
 function FormData(props) {
-  const getResults = e => {
-    e.preventDefault();
-    axios.post('/api/com-calc', props.formData).then(res => {
-      props.formUpdate({ name: 'data', value: res.data });
-    });
-  };
-
-  const resetForm = e => {
-    const keys = Object.keys(props.formData);
-
-    for (let i = 0; i < keys.length; ++i)
-      props.formUpdate({ name: keys[i], value: '' });
-  };
-
   return (
-    <Form onSubmit={getResults.bind(this)}>
+    <Form onSubmit={props.formSubmit.bind(this)}>
       <FormGroup>
         <TextField
           type='text'
@@ -114,7 +99,7 @@ function FormData(props) {
             variant='contained'
             color='secondary'
             startIcon={<DeleteIcon />}
-            onClick={resetForm.bind(this)}
+            onClick={props.formReset.bind(this)}
           >
             Reset
           </Button>
