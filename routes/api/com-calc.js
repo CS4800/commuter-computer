@@ -27,20 +27,22 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   state = {
     homeAddr: req.body.homeAddr,
+    homeCoord: req.body.homeCoord,
     remoteAddr: req.body.remoteAddr,
+    remoteCoord: req.body.remoteCoord,
     income: req.body.income,
     homeCost: req.body.homeCost,
     workHours: req.body.workHours
   };
 
   console.log('\nServer received post request at /api/com-calc');
-  console.log('data:', state);
-  console.log('Server sending back response');
+  console.log('post data:\n', state);
 
   feedback = {
     optimalCost: 'GOOD TO COMMUTE'
   };
 
+  console.log('Server sending back response');
   res.json(feedback);
 });
 

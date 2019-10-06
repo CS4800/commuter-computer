@@ -7,8 +7,7 @@ const url = require('url');
 // download zillow rent files to file system
 // @param url - url to download
 // @param fpath - path of file to save to file system
-// return Promise - resolve when successful download return file path,
-//                  reject when fails
+// return Promise - resolve with filesystem path
 function dlZillowRentalCSV(url, fpath) {
   return new Promise((resolve, reject) => {
     axios
@@ -17,7 +16,7 @@ function dlZillowRentalCSV(url, fpath) {
         fs.writeFileSync(fpath, res.data);
         resolve(fpath);
       })
-      .catch(e => reject(`Failed to download Zillow data (${url}): ${e}`));
+      .catch(e => reject(`Failed to download Zillow data [${url}]: ${e}`));
   });
 }
 
@@ -57,7 +56,7 @@ function readZillowData(files) {
 }
 
 // download zillow files and parse them to get pomona rent for latest month
-// return Promise - resolves with array of zillow rent data
+// return Promise - resolve with array of zillow rent data
 async function zillowRent() {
   const dir = 'resources';
   const baseUrl = 'http://files.zillowstatic.com/research/public/City/';
@@ -78,15 +77,9 @@ async function zillowRent() {
 
   // download all Zillow CSV
   return new Promise((resolve, reject) => {
-    Promise.all(
-      // wait for all downloads to finish
-      downloads.map(download =>
-        dlZillowRentalCSV(download['url'], download['path'])
-      )
-    )
-      // read all zillow files and resolve with results from readZillowData
+    Promise.all(downloads.map(dl => dlZillowRentalCSV(dl['url'], dl['path'])))
       .then(files => resolve(readZillowData(files)))
-      .catch(e => reject(`Failed to get results: ${e}`));
+      .catch(e => reject(e));
   });
 }
 

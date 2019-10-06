@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import { googleMapsJSKey } from '../config/keys';
 
-const MapDisplay = ({ text }) => <div style={{ color: 'red' }}>{text}</div>;
+const Marker = ({ text }) => <div style={{ color: 'red' }}>{text}</div>;
 
-class SimpleMap extends Component {
+class GoogleMap extends Component {
   render() {
     return (
       // Important! Always set the container height explicitly
@@ -14,7 +15,7 @@ class SimpleMap extends Component {
           defaultCenter={this.props.coords.center}
           defaultZoom={this.props.coords.center.zoom}
         >
-          <MapDisplay
+          <Marker
             lat={this.props.coords.cpp.lat}
             lng={this.props.coords.cpp.lng}
             text='Custom marker here!'
@@ -25,4 +26,8 @@ class SimpleMap extends Component {
   }
 }
 
-export default SimpleMap;
+GoogleMap.propTypes = {
+  coords: PropTypes.object
+};
+
+export default GoogleMap;
