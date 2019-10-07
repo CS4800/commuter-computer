@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const calculate = require('./calculate');
+const googleReq = require('./google-req');
 // @route   GET api/default
 // @desc    Example get route
 // @access  Public
@@ -24,7 +25,7 @@ router.get('/', (req, res) => {
 // @route   POST api/default
 // @desc    Example post route
 // @access  Public
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   state = {
     homeAddr: req.body.homeAddr,
     homeCoord: req.body.homeCoord,
@@ -38,19 +39,16 @@ router.post('/', (req, res) => {
   console.log('\nServer received post request at /api/com-calc');
   console.log('post data:\n', state);
 
-  calculate(state).then(function(result){
+  let data = await googleReq(state);
+  result = calculate(state, data);
+  const optimalCost = `You lose \$${result.lostCost.toFixed(2)} in opportunity cost a month`;
     
-    const optimalCost = `You lose \$${result.lostCost} in opportunity cost a month`;
-    
-    feedback = {
-      optimalCost: optimalCost
-    };
-  
-    console.log('Server sending back response');
-    res.json(feedback);
-  });
+  const feedback = {
+    optimalCost: optimalCost
+  };
 
- 
+  console.log('Server sending back response');
+  res.json(feedback);
 });
 
 // @route   DELETE api/default
