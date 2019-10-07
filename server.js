@@ -2,11 +2,7 @@ const express = require('express'); // server connection
 const mongoose = require('mongoose'); // mongodb connection
 const bodyParser = require('body-parser'); // parses post requests
 const path = require('path'); // server path
-const comCalc = require('./routes/api/com-calc'); // commuter calculator
-
-// Download Zillow rent csv files and get latest rent
-const zillowRent = require('./routes/api/zillow-rent'); // zillow rent data
-zillowRent().then(r => console.log('Zillow rent data\n', r));
+const ccRoute = require('./routes/api/comCalcRoute'); // commuter calc
 
 // mongodb connection
 const db = require('./config/keys').mongoURI;
@@ -22,13 +18,13 @@ const app = express();
 app.use(bodyParser.json());
 
 // commuter calculator api
-app.use('/api/com-calc', comCalc);
+app.use('/api/com-calc', ccRoute);
 
 // serve static files from the build folder
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // serve all client routes to React's entry point
-app.get(['/', '/about'], (req, res) =>
+app.get(['*'], (req, res) =>
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 );
 
@@ -36,7 +32,7 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port ${port}...`));
 
 /*******************************************************************************
- * Assignment code blow
+ * Assignment code below
  ******************************************************************************/
 const axios = require('axios'); // ajax calls
 const cheerio = require('cheerio'); // web scraper
@@ -54,15 +50,14 @@ app.use('/api/users', users);
 // mockup for scraping webpages for data
 html_data = '<html><head><title>Mockup data for title</title></head></html>';
 const $ = cheerio.load(html_data);
-console.log('This is the title from raw html:', $('title').text());
+const htmlTitle = $('title').text();
 
 // Moment api
 var date = new Date();
 var time = moment(date).format();
-console.log('Current time is', time);
 
 // Axios example of HTTP Calls with cheerio scraping
 axios.get('http://google.com').then(res => {
   const $ = cheerio.load(res.data);
-  console.log('Cheerio scraping with axios:', $('title').text());
+  const googleTitle = $('title').text();
 });

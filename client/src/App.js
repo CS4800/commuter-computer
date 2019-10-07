@@ -6,7 +6,7 @@ import AppNavbar from './components/layout/AppNavbar';
 import About from './components/pages/About';
 import ComCalc from './components/pages/ComCalc';
 import GoogleMap from './components/GoogleMap';
-import googleGeocoder from './modules/google-geocoder';
+// import googleGeocoder from './modules/googleGeocoder';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -57,18 +57,17 @@ class App extends Component {
   formSubmit = e => {
     e.preventDefault();
 
-    let addrs = [this.state.formData.homeAddr, this.state.formData.remoteAddr];
+    axios
+      .post('/api/com-calc', this.state.formData)
+      .then(res => this.formUpdate({ name: 'data', value: res.data }));
 
-    Promise.all(addrs.map(addr => googleGeocoder(addr))).then(coords => {
-      this.formUpdate(
-        { name: 'homeCoord', value: coords[0] },
-        { name: 'remoteCoord', value: coords[1] }
-      );
-
-      axios.post('/api/com-calc', this.state.formData).then(res => {
-        this.formUpdate({ name: 'data', value: res.data });
-      });
-    });
+    // let addrs = [this.state.formData.homeAddr, this.state.formData.remoteAddr];
+    // Promise.all(addrs.map(addr => googleGeocoder(addr))).then(coords => {
+    //   this.formUpdate(
+    //     { name: 'homeCoord', value: coords[0] },
+    //     { name: 'remoteCoord', value: coords[1] }
+    //   );
+    // });
   };
 
   render() {
