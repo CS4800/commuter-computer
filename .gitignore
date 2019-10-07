@@ -1,5 +1,11 @@
 **/*.csv
 **/*.vscode
+client/build
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
 **/node_modules
 client/build
 keys.md
