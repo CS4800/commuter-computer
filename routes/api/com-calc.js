@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const calculate = require('./calculate');
 // @route   GET api/default
 // @desc    Example get route
 // @access  Public
@@ -38,12 +38,19 @@ router.post('/', (req, res) => {
   console.log('\nServer received post request at /api/com-calc');
   console.log('post data:\n', state);
 
-  feedback = {
-    optimalCost: 'GOOD TO COMMUTE'
-  };
+  calculate(state).then(function(result){
+    
+    const optimalCost = `You lose \$${result.lostCost} in opportunity cost a month`;
+    
+    feedback = {
+      optimalCost: optimalCost
+    };
+  
+    console.log('Server sending back response');
+    res.json(feedback);
+  });
 
-  console.log('Server sending back response');
-  res.json(feedback);
+ 
 });
 
 // @route   DELETE api/default
