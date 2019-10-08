@@ -24,7 +24,7 @@ app.use('/api/com-calc', ccRoute);
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // serve all client routes to React's entry point
-app.get(['*'], (req, res) =>
+app.get(['/', '/about'], (req, res) =>
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 );
 
