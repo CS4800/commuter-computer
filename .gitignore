@@ -9,4 +9,4 @@ client/build
 **/node_modules
 client/build
 keys.md
-**/keys.js
+dev_env.sh
