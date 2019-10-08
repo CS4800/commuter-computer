@@ -1,6 +1,7 @@
 const calculate = require('../lib/calculate');
 const { distanceMatrix } = require('../lib/googleAPI');
 const zillowRent = require('../lib/zillowRent');
+const gasPrices = require('../lib/gasPrices');
 
 /**
  * Post function for Commuter Calculator to get optimal cost
@@ -23,6 +24,9 @@ async function post(req, res) {
   // get zillow rent data for pomona
   const rent = await zillowRent();
 
+  // get current avg california gas prices
+  const gas = await gasPrices('CA');
+
   // get distance and duration from home address to remot address
   const { distance, duration } = await distanceMatrix(
     state.homeAddr,
@@ -39,6 +43,7 @@ async function post(req, res) {
 
   // feedback for requester
   const feedback = {
+    gas: gas,
     optimalCost: optimalCost
   };
 
