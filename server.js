@@ -61,3 +61,8 @@ axios.get('http://google.com').then(res => {
   const $ = cheerio.load(res.data);
   const googleTitle = $('title').text();
 });
+
+// Unmatched routes - must be last route!
+app.use((req, res) =>
+  res.status(404).sendFile(path.join(__dirname, 'client/build', 'index.html'))
+);
