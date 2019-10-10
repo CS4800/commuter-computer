@@ -19,18 +19,20 @@ async function post(req, res) {
     remoteAddr: req.body.remoteAddr,
     startTime: req.body.startTime, // String format HH:mm:ss
     endTime: req.body.endTime, // String format HH:mm:ss
-    daysPerWeek: req.body.daysPerWeek,
+    daysPerWeek: parseInt(req.body.daysPerWeek), 
     income: req.body.income,
-    mpg: req.body.mpg,
+    mpg: parseFloat(req.body.mpg),
+    gas: null,
     distance: null,
     duration: null
   };
-
+  
   // get zillow rent data for pomona
   const rent = await zillowRent();
 
   // get current avg california gas prices
   const gas = await gasPrice('CA', 'Los Angeles-Long Beach');
+  state.gas = gas;
 
   // get distance and duration from home address to remot address
   const { distance, duration } = await distanceMatrix(
@@ -42,9 +44,8 @@ async function post(req, res) {
 
   // calculate optimal cost
   const result = calculate(state);
-  const optimalCost = `You lose $${result.lostCost.toFixed(
-    2
-  )} in opportunity cost a month`;
+  const optimalCost = `You lose $${result.lostCost.toFixed(2)} in opportunity cost a month \n
+  You spend $${result.gasCost.toFixed(2)} a month on gas`;
 
   // feedback for requester
   const feedback = {
