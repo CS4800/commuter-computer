@@ -7,10 +7,7 @@ class ComCalc extends Component {
   render() {
     return (
       <div>
-        <h3 className='mb-5'>
-          Fill out the the required fields below to find out if it's better to
-          commute or live close to your work/school!
-        </h3>
+        <h3 className='mb-5'>Calculate your commute cost!</h3>
         <FormData
           formData={this.props.formData}
           formChange={this.props.formChange}
@@ -19,7 +16,7 @@ class ComCalc extends Component {
           formSubmit={this.props.formSubmit}
         />
         <div className='mt-3'></div>
-        <Result data={this.props.formData.data} />
+        <Result result={this.props.result} />
       </div>
     );
   }

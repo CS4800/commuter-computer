@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 class Result extends Component {
   render() {
-    if (this.props.data)
-      return <div>Response from server: {this.props.data.optimalCost}</div>;
+    if (this.props.result)
+      return <div>Response from server: {this.props.result.optimalCost}</div>;
     else return <div>&nbsp;</div>;
   }
 }

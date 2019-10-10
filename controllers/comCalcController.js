@@ -12,11 +12,16 @@ const gasPrice = require('../lib/gasPrice');
  */
 async function post(req, res) {
   state = {
-    homeAddr: req.body.homeAddr,
+    homeAddr1: req.body.homeAddr1,
+    homeAddr2: req.body.homeAddr2,
+    homeCost1: req.body.homeCost1,
+    homeCost2: req.body.homeCost2,
     remoteAddr: req.body.remoteAddr,
+    startTime: req.body.startTime, // String format HH:mm:ss
+    endTime: req.body.endTime, // String format HH:mm:ss
+    daysPerWeek: req.body.daysPerWeek,
     income: req.body.income,
-    homeCost: req.body.homeCost,
-    workHours: req.body.workHours,
+    mpg: req.body.mpg,
     distance: null,
     duration: null
   };
@@ -29,7 +34,7 @@ async function post(req, res) {
 
   // get distance and duration from home address to remot address
   const { distance, duration } = await distanceMatrix(
-    state.homeAddr,
+    state.homeAddr1,
     state.remoteAddr
   );
   state.distance = distance;

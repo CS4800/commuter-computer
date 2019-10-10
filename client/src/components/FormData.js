@@ -9,75 +9,181 @@ import TextField from '@material-ui/core/TextField';
 function FormData(props) {
   return (
     <Form onSubmit={props.formSubmit.bind(this)}>
-      <FormGroup>
-        <TextField
-          type='text'
-          id='homeAddr'
-          label='Home Address'
-          name='homeAddr'
-          fullWidth
-          margin='dense'
-          autoFocus
-          required
-          value={props.formData.homeAddr}
-          onChange={props.formChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <TextField
-          type='text'
-          id='remoteAddr'
-          label='Work Address'
-          name='remoteAddr'
-          fullWidth
-          margin='dense'
-          required
-          value={props.formData.remoteAddr}
-          onChange={props.formChange}
-        />
-      </FormGroup>
       <Row form>
-        <Col>
+        <Col sm>
+          <Row>
+            <Col>
+              <FormGroup>
+                <TextField
+                  id='homeAddr1'
+                  name='homeAddr1'
+                  label='Home Address'
+                  type='text'
+                  margin='dense'
+                  fullWidth
+                  autoFocus
+                  required
+                  value={props.formData.homeAddr1}
+                  onChange={props.formChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <FormGroup>
+                <TextField
+                  id='homeCost1'
+                  name='homeCost1'
+                  label='Rent/Mortgage'
+                  type='number'
+                  fullWidth
+                  margin='dense'
+                  required
+                  value={props.formData.homeCost1}
+                  onChange={props.formChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        </Col>
+        <Col sm>
+          <Row>
+            <Col>
+              <FormGroup>
+                <TextField
+                  id='homeAddr2'
+                  name='homeAddr2'
+                  label='Second Home Address'
+                  type='text'
+                  margin='dense'
+                  fullWidth
+                  autoFocus
+                  value={props.formData.homeAddr2}
+                  onChange={props.formChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <FormGroup>
+                <TextField
+                  id='homeCost2'
+                  name='homeCost2'
+                  label='Rent/Mortgage'
+                  type='number'
+                  fullWidth
+                  margin='dense'
+                  value={props.formData.homeCost2}
+                  onChange={props.formChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row form>
+        <Col sm>
           <FormGroup>
             <TextField
-              type='number'
-              id='income'
-              label='Income'
-              name='income'
-              fullWidth
+              id='remoteAddr'
+              name='remoteAddr'
+              label='Work Address'
+              type='text'
               margin='dense'
+              fullWidth
+              required
+              value={props.formData.remoteAddr}
+              onChange={props.formChange}
+            />
+          </FormGroup>
+        </Col>
+        <Col sm>
+          <Row form>
+            <Col>
+              <TextField
+                id='startTime'
+                name='startTime'
+                label='Start Time'
+                type='time'
+                margin='dense'
+                fullWidth
+                required
+                value={props.formData.startTime}
+                onChange={props.formChange}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                inputProps={{
+                  step: 300 // 5 min
+                }}
+              />
+            </Col>
+            <Col>
+              <TextField
+                id='endTime'
+                name='endTime'
+                label='End Time'
+                type='time'
+                margin='dense'
+                fullWidth
+                required
+                value={props.formData.endTime}
+                onChange={props.formChange}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                inputProps={{
+                  step: 300 // 5 min
+                }}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row form>
+        <Col sm>
+          <FormGroup>
+            <TextField
+              id='daysPerWeek'
+              name='daysPerWeek'
+              label='Work Days/Week'
+              type='number'
+              margin='dense'
+              fullWidth
+              required
+              value={props.formData.daysPerWeek}
+              onChange={props.formChange}
+            />
+          </FormGroup>
+        </Col>
+        <Col sm>
+          <FormGroup>
+            <TextField
+              id='income'
+              name='income'
+              label='Income'
+              type='number'
+              margin='dense'
+              fullWidth
               required
               value={props.formData.income}
               onChange={props.formChange}
             />
           </FormGroup>
         </Col>
-        <Col>
+        <Col sm>
           <FormGroup>
             <TextField
+              id='mpg'
+              name='mpg'
+              label='MPG'
               type='number'
-              id='homeCost'
-              label='Rent/Mortgage'
-              name='homeCost'
-              fullWidth
               margin='dense'
-              required
-              value={props.formData.homeCost}
-              onChange={props.formChange}
-            />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <TextField
-              type='number'
-              id='workHours'
-              label='Work Hours'
-              name='workHours'
               fullWidth
-              margin='dense'
               required
-              value={props.formData.workHours}
+              value={props.formData.mpg}
               onChange={props.formChange}
             />
           </FormGroup>
