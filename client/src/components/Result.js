@@ -3,6 +3,27 @@ import PropTypes from 'prop-types';
 import { Col, Row } from 'reactstrap';
 import ResultBreakDown from './ResultCard';
 
+const mockupData = [
+  {
+    title: 'Location 1',
+    list: [
+      { status: '', name: 'rent', value: 10 },
+      { status: '+', name: 'gasCost', value: 10 },
+      { status: '-', name: 'opportunityCost', value: 10 }
+    ],
+    total: 'Total'
+  },
+  {
+    title: 'Location 2',
+    list: [
+      { status: '', name: 'rent', value: 10 },
+      { status: '+', name: 'gasCost', value: 10 },
+      { status: '-', name: 'opportunityCost', value: 10 }
+    ],
+    total: 'Total'
+  }
+];
+
 class Result extends Component {
   render() {
     if (this.props.result) {
@@ -10,12 +31,11 @@ class Result extends Component {
         <React.Fragment>
           <div>Response from server: {this.props.result.optimalCost}</div>
           <Row form>
-            <Col>
-              <ResultBreakDown />
-            </Col>
-            <Col>
-              <ResultBreakDown />
-            </Col>
+            {mockupData.map((d, i) => (
+              <Col key={i} sm>
+                <ResultBreakDown data={d} />
+              </Col>
+            ))}
           </Row>
         </React.Fragment>
       );
@@ -24,7 +44,7 @@ class Result extends Component {
 }
 
 Result.propTypes = {
-  data: PropTypes.object
+  result: PropTypes.object
 };
 
 export default Result;
