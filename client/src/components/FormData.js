@@ -58,7 +58,6 @@ function FormData(props) {
                   type='text'
                   margin='dense'
                   fullWidth
-                  autoFocus
                   value={props.formData.homeAddr2}
                   onChange={props.formChange}
                 />

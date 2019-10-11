@@ -8,5 +8,4 @@ client/build
 
 **/node_modules
 client/build
-keys.md
 dev_env.sh

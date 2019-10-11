@@ -6,7 +6,7 @@ import Result from '../Result';
 class ComCalc extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <h3 className='mb-5'>Calculate your commute cost!</h3>
         <FormData
           formData={this.props.formData}
@@ -17,7 +17,7 @@ class ComCalc extends Component {
         />
         <div className='mt-3'></div>
         <Result result={this.props.result} />
-      </div>
+      </React.Fragment>
     );
   }
 }
