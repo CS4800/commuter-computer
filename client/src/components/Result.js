@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'reactstrap';
-import ResultBreakDown from './ResultCard';
+import ResultCard from './ResultCard';
 
 const mockupData = [
   {
@@ -33,7 +33,7 @@ class Result extends Component {
           <Row form>
             {mockupData.map((d, i) => (
               <Col key={i} sm>
-                <ResultBreakDown data={d} />
+                <ResultCard data={d} />
               </Col>
             ))}
           </Row>

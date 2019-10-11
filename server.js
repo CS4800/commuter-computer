@@ -2,7 +2,8 @@ const express = require('express'); // server connection
 const mongoose = require('mongoose'); // mongodb connection
 const bodyParser = require('body-parser'); // parses post requests
 const path = require('path'); // server path
-const ccRoute = require('./routes/api/comCalcRoute'); // commuter calc
+const service = require('./providers/service'); // comCalc setup
+const ccRoute = require('./routes/api/comCalcRoute'); // commuter calc routing
 
 // mongodb connection
 const db = require('./config/keys').mongoURI;
@@ -27,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get(['/', '/about'], (req, res) =>
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 );
+
+// server service for db seed, scheduling jobs etc
+service.run();
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port ${port}...`));

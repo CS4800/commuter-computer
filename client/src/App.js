@@ -28,6 +28,7 @@ class App extends Component {
   };
 
   state = {
+    title: 'Commuter Computer',
     formData: _.cloneDeep(this.defaultFormData),
     coords: {
       cpp: { lat: 34.0589, lng: -117.8194 },
@@ -82,7 +83,7 @@ class App extends Component {
     return (
       <Router>
         <div className='App'>
-          <AppNavbar />
+          <AppNavbar title={this.state.title} />
           <Container>
             <Switch>
               <Route path='/about' exact>

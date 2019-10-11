@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { NavLink as RouterNavLInk } from 'react-router-dom';
 import {
   Collapse,
@@ -28,7 +29,7 @@ class AppNavbar extends Component {
         <Navbar color='dark' dark expand='sm' className='mb-5'>
           <Container>
             <NavbarBrand tag={RouterNavLInk} to='/'>
-              Commuter Computer
+              {this.props.title}
             </NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
@@ -46,5 +47,9 @@ class AppNavbar extends Component {
     );
   }
 }
+
+AppNavbar.propTypes = {
+  title: PropTypes.string
+};
 
 export default AppNavbar;
