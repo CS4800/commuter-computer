@@ -1,7 +1,7 @@
 const calculate = require('../lib/calculate');
 const { distanceMatrix } = require('../lib/googleAPI');
-const zillowRent = require('../lib/zillowRent');
 let GasPrice = require('../models/gasPriceModel');
+let RentPrice = require('../models/rentPriceModel');
 
 /**
  * Post function for Commuter Calculator to get optimal cost
@@ -23,19 +23,24 @@ async function post(req, res) {
     income: req.body.income,
     mpg: Number(req.body.mpg),
     gas: null,
+    rent: null,
     distance: null,
     duration: null
   };
 
-  // get zillow rent data for pomona
-  const rent = await zillowRent();
+  // get zillow rent prices for california, pomona
+  const rent = await RentPrice.findOne({
+    state: 'CA',
+    city: 'Pomona'
+  });
+  state.rent = rent.prices;
 
   // get california, la gas prices avg
-  const { prices } = await GasPrice.findOne({
+  const gas = await GasPrice.findOne({
     state: 'CA',
     county: 'Los Angeles-Long Beach'
   });
-  state.gas = prices;
+  state.gas = gas.prices;
 
   // get distance and duration from home address to remot address
   const { distance, duration } = await distanceMatrix(
