@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Spring } from 'react-spring/renderprops';
 import { CardHeader, ListGroup, ListGroupItem } from 'reactstrap';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,25 +19,35 @@ class ResultCard extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Card className='mb-3'>
-          <CardHeader tag='h5' className='text-center'>
-            {this.props.data.title}
-          </CardHeader>
-          <CardContent className='text-right' style={{ padding: 0, margin: 0 }}>
-            <ListGroup flush>
-              {this.props.data.list.map((v, i) => (
-                <ListGroupItem key={i} style={{ border: 'none' }}>
-                  <span style={this.itemStyle(v.status)}>
-                    {v.name}: {v.value}
-                  </span>
-                </ListGroupItem>
-              ))}
-              <ListGroupItem>{this.props.data.total}</ListGroupItem>
-            </ListGroup>
-          </CardContent>
-        </Card>
-      </React.Fragment>
+      <Spring
+        from={{ opacity: 0, marginLeft: -500 }}
+        to={{ opacity: 1, marginLeft: 0 }}
+      >
+        {props => (
+          <div style={props}>
+            <Card className='mb-3'>
+              <CardHeader tag='h6' className='text-center'>
+                {this.props.data.title}
+              </CardHeader>
+              <CardContent
+                className='text-right'
+                style={{ padding: 0, margin: 0 }}
+              >
+                <ListGroup flush>
+                  {this.props.data.list.map((v, i) => (
+                    <ListGroupItem key={i} style={{ border: 'none' }}>
+                      <span style={this.itemStyle(v.status)}>
+                        {v.name}: {v.value}
+                      </span>
+                    </ListGroupItem>
+                  ))}
+                  <ListGroupItem>{this.props.data.total}</ListGroupItem>
+                </ListGroup>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </Spring>
     );
   }
 }
