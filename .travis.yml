@@ -10,7 +10,7 @@ script:
 before_deploy:
   - cd ..
   - echo `pwd`
-  - zip -r ${TRAVIS_BUILD_DIR}${REPO} ${REPO}-${BUILD_ENV}-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.zip
+  - zip -r ${REPO}-${BUILD_ENV}-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.zip commuter-computer
 
 deploy:
   skip_cleanup: true
