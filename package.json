@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "client-install": "npm i --prefix client",
-    "start": "npm run build --prefix client && node server",
+    "build-client": "npm run buld --prefix client",
+    "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
