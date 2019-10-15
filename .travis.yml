@@ -20,7 +20,7 @@ deploy:
     secure: ANI26HKsQFLi8o9VABeMveuYGzjsfBjo6Ys9c8EoaXmUKHjN0u1Y4ML5pyiEa9vH4Ur+d6fllvj3vw0j1LBLmdLJUp0UkMIOVW2xYtO232kBMkbaLKr1UhUsHHdEBhLt3uVD4OzdhuQQoHbAfpeSxNexxWl5+3XfqHulzrUu6caGxico7CeOf7AA/pBWLV0GxRHiPZJsr6y6zj2WC335At7Ai/ljhbT3qmaYR2v0vqJHxwG5NaNTmyZn1ffQ7FpFCDfltuT1NOadWHDB9e+bK+qUGRkzXg2NnH+KmghflcVyz2uO+vAtdc0iaYH27HZhUWy3hixgwTabkcX+xowISRPRS7ra+tH8Mp6fKg0rfd3usSaNxtPsKLAXm3JZ1RHn9YpCoVsg20HAg0hPcwXNqtAdsvFJFlCbTHJP05N8uBT2160YwER5Z8vUiHNCSTVOIcTMAVb5kuiE0/0QE3v7Uwse6HsKxGJqLrhDXaKnfVzF1dCXtWEzNrksIziqCMjpWUoQjubF5IuLd971+YhXUOXji/B+n87rBsrzK2gSt7XLddOJFhz6VildNxzYMgun23XpHO9PWqc4tbtK2zwUxCBRBY+wTFH+egO8VsxL2VVPIo/TTit42ruMp1Idrbnr9qi5bwlfZ9fifzxAiTQb+DXdMyMOS2HKanFG5Sz4k8Y=
   region: us-west-2
   app: commuter-computer
-  env: node-express-env
+  env: com-comp-env
   bucket_name: elasticbeanstalk-us-west-2-047573541716
   bucket_path: commuter-computer
   # zip-file: ${TRAVIS_COMMIT}-${TRAVIS_BUILD_NUMBER}.zip
