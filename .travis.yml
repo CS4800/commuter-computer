@@ -8,12 +8,12 @@ script:
   - npm run build --prefix client
 
 before_deploy:
-  - cd ..
   - echo `pwd`
-  - zip -r ${TRAVIS_COMMIT}-${TRAVIS_BUILD_NUMBER}.zip commuter-computer
+  - ls
+#  - zip -r --exclude=\*.git\* --exclude=\*.DS_Store\* ${TRAVIS_COMMIT}-${TRAVIS_BUILD_NUMBER}.zip *.*
 
 deploy:
-  skip_cleanup: true
+  edge: true
   provider: elasticbeanstalk
   access_key_id: AKIAIQKBM7ALCJPD27IA
   secret_access_key:
@@ -22,6 +22,12 @@ deploy:
   app: commuter-computer
   env: node-express-env
   bucket_name: elasticbeanstalk-us-west-2-047573541716
-  zip-file: ${TRAVIS_COMMIT}-${TRAVIS_BUILD_NUMBER}.zip
+  bucket_path: commuter-computer
+  # zip-file: ${TRAVIS_COMMIT}-${TRAVIS_BUILD_NUMBER}.zip
   on:
     repo: CS4800/commuter-computer
+
+after_deploy:
+  - echo after deploy
+  - pwd
+  - ls
