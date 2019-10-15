@@ -1,2 +1,3 @@
 dev_env.sh
 .git/*
+**/node_modules
