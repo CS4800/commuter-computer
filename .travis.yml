@@ -22,6 +22,6 @@ deploy:
   app: commuter-computer
   env: node-express-env
   bucket_name: elasticbeanstalk-us-west-2-047573541716
-  file: ${TRAVIS_COMMIT}-${TRAVIS_BUILD_NUMBER}.zip
+  zip-file: ${TRAVIS_COMMIT}-${TRAVIS_BUILD_NUMBER}.zip
   on:
     repo: CS4800/commuter-computer
