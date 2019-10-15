@@ -5,7 +5,7 @@ install:
   - npm run client-install
 
 script:
-  - npm start
+  - npm run build --prefix client
 
 deploy:
   skip_cleanup: true
