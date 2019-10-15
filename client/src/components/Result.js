@@ -3,37 +3,15 @@ import PropTypes from 'prop-types';
 import { Col, Row } from 'reactstrap';
 import ResultCard from './ResultCard';
 
-const mockupData = [
-  {
-    title: 'Location 1',
-    list: [
-      { status: '', name: 'rent', value: 10 },
-      { status: '+', name: 'gasCost', value: 10 },
-      { status: '-', name: 'opportunityCost', value: 10 }
-    ],
-    total: 'Total'
-  },
-  {
-    title: 'Location 2',
-    list: [
-      { status: '', name: 'rent', value: 10 },
-      { status: '+', name: 'gasCost', value: 10 },
-      { status: '-', name: 'opportunityCost', value: 10 }
-    ],
-    total: 'Total'
-  }
-];
-
 class Result extends Component {
   render() {
-    if (this.props.result) {
+    if (this.props.results && this.props.results.length) {
       return (
         <React.Fragment>
-          <div>Response from server: {this.props.result.optimalCost}</div>
           <Row form>
-            {mockupData.map((d, i) => (
+            {this.props.results.map((result, i) => (
               <Col key={i} sm>
-                <ResultCard data={d} />
+                <ResultCard result={result} />
               </Col>
             ))}
           </Row>
