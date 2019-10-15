@@ -162,7 +162,7 @@ function FormData(props) {
             <TextField
               id='income'
               name='income'
-              label='Income'
+              label='Income (per hour)'
               type='number'
               margin='dense'
               fullWidth

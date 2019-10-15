@@ -4,6 +4,7 @@ const bodyParser = require('body-parser'); // parses post requests
 const path = require('path'); // server path
 const service = require('./providers/service'); // comCalc setup
 const ccRoute = require('./routes/api/comCalcRoute'); // commuter calc routing
+const mongoRoute = require('./routes/api/mongoRoute'); // mongodb routes
 
 // mongodb connection
 const db = require('./config/keys').mongoURI;
@@ -20,6 +21,9 @@ app.use(bodyParser.json());
 
 // commuter calculator api
 app.use('/api/com-calc', ccRoute);
+
+// mongodb api routes
+app.use('/api/mongo', mongoRoute);
 
 // serve static files from the build folder
 app.use(express.static(path.join(__dirname, 'client/build')));
