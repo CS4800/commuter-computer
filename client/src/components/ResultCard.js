@@ -27,21 +27,27 @@ class ResultCard extends Component {
           <div style={props}>
             <Card className='mb-3'>
               <CardHeader tag='h6' className='text-center'>
-                {this.props.data.title}
+                {this.props.result.title}
               </CardHeader>
               <CardContent
                 className='text-right'
                 style={{ padding: 0, margin: 0 }}
               >
+                <div
+                  style={{ padding: '.75rem 1.25rem' }}
+                  className='text-center'
+                >
+                  {this.props.result.body}
+                </div>
                 <ListGroup flush>
-                  {this.props.data.list.map((v, i) => (
+                  {this.props.result.costs.map((v, i) => (
                     <ListGroupItem key={i} style={{ border: 'none' }}>
                       <span style={this.itemStyle(v.status)}>
                         {v.name}: {v.value}
                       </span>
                     </ListGroupItem>
                   ))}
-                  <ListGroupItem>{this.props.data.total}</ListGroupItem>
+                  <ListGroupItem>{this.props.result.total}</ListGroupItem>
                 </ListGroup>
               </CardContent>
             </Card>
@@ -53,7 +59,7 @@ class ResultCard extends Component {
 }
 
 ResultCard.propTypes = {
-  data: PropTypes.object
+  result: PropTypes.object
 };
 
 export default ResultCard;

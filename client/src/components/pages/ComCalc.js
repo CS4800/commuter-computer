@@ -16,7 +16,7 @@ class ComCalc extends Component {
           formSubmit={this.props.formSubmit}
         />
         <div className='mt-3'></div>
-        <Result result={this.props.result} />
+        <Result results={this.props.results} />
       </React.Fragment>
     );
   }
@@ -27,7 +27,8 @@ ComCalc.propTypes = {
   formChange: PropTypes.func,
   formUpdate: PropTypes.func,
   formReset: PropTypes.func,
-  formSubmit: PropTypes.func
+  formSubmit: PropTypes.func,
+  results: PropTypes.array
 };
 
 export default ComCalc;

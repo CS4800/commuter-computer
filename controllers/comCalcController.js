@@ -11,11 +11,9 @@ let RentPrice = require('../models/rentPriceModel');
  * @return {Object} res.json() Send json feedback response
  */
 async function post(req, res) {
-  state = {
-    homeAddr1: req.body.homeAddr1,
-    homeAddr2: req.body.homeAddr2,
-    homeCost1: req.body.homeCost1,
-    homeCost2: req.body.homeCost2,
+  let state = {
+    homeAddresses: [req.body.homeAddr1, req.body.homeAddr2],
+    homeCosts: [req.body.homeCost1, req.body.homeCost2],
     remoteAddr: req.body.remoteAddr,
     startTime: req.body.startTime, // String format HH:mm:ss
     endTime: req.body.endTime, // String format HH:mm:ss
@@ -24,9 +22,9 @@ async function post(req, res) {
     mpg: Number(req.body.mpg),
     gas: null,
     rent: null,
-    distance: null,
-    duration: null
+    matrices: null
   };
+  let results = null;
 
   // get zillow rent prices for california, pomona
   const rent = await RentPrice.findOne({
@@ -43,26 +41,23 @@ async function post(req, res) {
   state.gas = gas.prices;
 
   // get distance and duration from home address to remot address
-  const { distance, duration } = await distanceMatrix(
-    state.homeAddr1,
+  const {
+    matrices,
+    origin_addresses,
+    destination_addresses
+  } = await distanceMatrix(
+    state.homeAddresses[0] + '|' + state.homeAddresses[1],
     state.remoteAddr
   );
-  state.distance = distance;
-  state.duration = duration;
+  state.matrices = matrices;
+
+  state.homeAddresses[0] = origin_addresses[0] ? origin_addresses[0] : '';
+  state.homeAddresses[1] = origin_addresses[1] ? origin_addresses[1] : '';
 
   // calculate optimal cost
-  const result = calculate(state);
-  const optimalCost = `You lose $${result.lostCost.toFixed(
-    2
-  )} in opportunity cost a month \n
-  You spend $${result.gasCost.toFixed(2)} a month on gas`;
+  results = calculate(state);
 
-  // feedback for requester
-  const feedback = {
-    optimalCost: optimalCost
-  };
-
-  res.json(feedback);
+  res.json(results);
 }
 
 module.exports = {
