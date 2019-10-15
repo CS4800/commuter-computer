@@ -9,7 +9,8 @@ script:
 
 before_deploy:
   - cd ..
-  - zip -r ${TRAVIS_BUILD_DIR}${REPO}-${BUILD_ENV}-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.zip ${REPO}
+  - echo `pwd`
+  - zip -r ${TRAVIS_BUILD_DIR}${REPO} ${REPO}-${BUILD_ENV}-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.zip
 
 deploy:
   skip_cleanup: true
@@ -21,6 +22,6 @@ deploy:
   app: commuter-computer
   env: node-express-env
   bucket_name: elasticbeanstalk-us-west-2-047573541716
-  file: ${TRAVIS_BUILD_DIR}${REPO}-${BUILD_ENV}-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.zip
+  file: ${REPO}-${BUILD_ENV}-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.zip
   on:
     repo: CS4800/commuter-computer
