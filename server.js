@@ -6,12 +6,31 @@ const service = require('./providers/service'); // comCalc setup
 const ccRoute = require('./routes/api/comCalcRoute'); // commuter calc routing
 const mongoRoute = require('./routes/api/mongoRoute'); // mongodb routes
 
-// mongodb connection
+// mongodb settings
 const db = require('./config/keys').mongoURI;
+const dbOptions = {
+  autoReconnect: true,
+  keepAlive: true,
+  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+  reconnectInterval: 1000, // Reconnect every 1 second
+  poolSize: 10, // Maintain up to 10 socket connections
+  connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
+  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity,
+
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+};
+
+// mongodb connections
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db, dbOptions)
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(`MongoDB connection fail: ${err}`));
+mongoose.connection.on('error', e => console.log(`Mongo error: ${e}`));
+mongoose.connection.on('disconnected', () => console.log('Mongo disconnected'));
+mongoose.connection.on('reconnected', () => console.log('Mongo reconnected'));
+mongoose.connection.on('connected', () => console.log('Mongo connected'));
 
 // server app
 const app = express();
