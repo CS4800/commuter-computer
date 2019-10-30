@@ -39,7 +39,6 @@ function FormData(props) {
                   type='number'
                   fullWidth
                   margin='dense'
-                  required
                   value={props.formData.homeCost1}
                   onChange={props.formChange}
                 />
