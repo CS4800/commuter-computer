@@ -10,6 +10,8 @@ let RentPrice = require('../models/rentPriceModel');
  * @return none
  */
 async function rentPriceUpdate() {
+  console.log('Updating: rentPriceModel');
+
   const prices = await zillowRent('CA');
 
   for (price of prices) {

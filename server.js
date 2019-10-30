@@ -23,14 +23,12 @@ const dbOptions = {
 };
 
 // mongodb connections
-mongoose
-  .connect(db, dbOptions)
-  .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.log(`MongoDB connection fail: ${err}`));
-mongoose.connection.on('error', e => console.log(`Mongo error: ${e}`));
+mongoose.connection.on('connecting', () => console.log('Mongo connecting...'));
+mongoose.connection.on('connected', () => console.log('Mongo connected'));
 mongoose.connection.on('disconnected', () => console.log('Mongo disconnected'));
 mongoose.connection.on('reconnected', () => console.log('Mongo reconnected'));
-mongoose.connection.on('connected', () => console.log('Mongo connected'));
+mongoose.connection.on('error', e => console.log(`Mongo error: ${e}`));
+mongoose.connect(db, dbOptions);
 
 // server app
 const app = express();

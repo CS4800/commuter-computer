@@ -10,6 +10,8 @@ let GasPrice = require('../models/gasPriceModel');
  * @return none
  */
 async function gasPriceUpdate() {
+  console.log('Updating: gasPriceModel');
+
   const prices = await gasPricesByState('CA');
 
   for (price of prices) {

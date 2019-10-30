@@ -41,7 +41,7 @@ async function post(req, res) {
   });
   state.gas = gas.prices;
 
-  // get next Wednesday and reset startTime / endTime to time since epoch
+  // get next Wednesday and reset startTime/endTime since epoch in millisec
   let wed = util.getNextDay(3);
   state.startTime = util.getTimeSinceEpoch(wed, state.startTime);
   state.endTime = util.getTimeSinceEpoch(wed, state.endTime);
