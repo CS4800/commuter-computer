@@ -3,4 +3,5 @@ module.exports = {
   mongoURI: process.env.MONGOURI || '',
   googleDistanceMatrixKey: process.env.DIST_MATRIX_KEY || '',
   googleGeocodingKey: process.env.GEOCODING_KEY || '',
+  googleTimeZoneKey: process.env.TIMEZONE_KEY || ''
 };

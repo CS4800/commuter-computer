@@ -1,5 +1,5 @@
 const calculate = require('../lib/calculate');
-const { distanceMatrix } = require('../lib/googleAPI');
+const google = require('../lib/googleAPI');
 const util = require('../lib/util');
 let GasPrice = require('../models/gasPriceModel');
 let RentPrice = require('../models/rentPriceModel');
@@ -41,17 +41,22 @@ async function post(req, res) {
   });
   state.gas = gas.prices;
 
-  // get next Wednesday and reset startTime/endTime since epoch in millisec
+  // get timezone offset from remote address
+  const geo = await google.geocoder(state.remoteAddr); // GPS loc for timezone
+  const tz = await google.timezone(geo['lat'], geo['lng']);
+
+  // get next Wednesday and convert startTime/endTime to time since unix epoch
+  // with timezone offset
   let wed = util.getNextDay(3);
-  state.startTime = util.getTimeSinceEpoch(wed, state.startTime);
-  state.endTime = util.getTimeSinceEpoch(wed, state.endTime);
+  state.startTime = util.getUnixEpoch(wed, state.startTime, -tz['rawOffset']);
+  state.endTime = util.getUnixEpoch(wed, state.endTime, -tz['rawOffset']);
 
   // get distance and duration from home address to remot address
   const {
     matrices,
     origin_addresses,
     destination_addresses
-  } = await distanceMatrix(
+  } = await google.distanceMatrix(
     state.homeAddresses[0] + '|' + state.homeAddresses[1],
     state.remoteAddr,
     Math.round(state.startTime / 1000) // millisec to sec
