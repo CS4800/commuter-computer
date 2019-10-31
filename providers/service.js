@@ -19,7 +19,7 @@ async function run() {
   rule.minute = 0;
 
   // schedule recurrent job
-  schedule.scheduleJob(rule, function() {
+  schedule.scheduleJob(rule, () => {
     console.log(`Running scheduled jobs...on ${new Date()}`);
 
     gasPriceUpdate();

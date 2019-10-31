@@ -18,6 +18,9 @@ class ResultCard extends Component {
   };
 
   render() {
+    let costs = this.props.result.costs;
+    let total = this.props.result.total;
+
     return (
       <Spring
         from={{ opacity: 0, marginLeft: -500 }}
@@ -40,14 +43,18 @@ class ResultCard extends Component {
                   {this.props.result.body}
                 </div>
                 <ListGroup flush>
-                  {this.props.result.costs.map((v, i) => (
+                  {costs.map((cost, i) => (
                     <ListGroupItem key={i} style={{ border: 'none' }}>
-                      <span style={this.itemStyle(v.status)}>
-                        {v.name}: {v.value}
+                      <span style={this.itemStyle(cost.status)}>
+                        {cost.name}: {cost.value}
                       </span>
                     </ListGroupItem>
                   ))}
-                  <ListGroupItem>{this.props.result.total}</ListGroupItem>
+                  <ListGroupItem>
+                    <span style={this.itemStyle(total.status)}>
+                      {total.name}: {total.value}
+                    </span>
+                  </ListGroupItem>
                 </ListGroup>
               </CardContent>
             </Card>
