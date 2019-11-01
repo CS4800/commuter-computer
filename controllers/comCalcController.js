@@ -1,8 +1,8 @@
 const calculate = require('../lib/calculate');
 const google = require('../lib/googleAPI');
 const util = require('../lib/util');
-let GasPrice = require('../models/gasPriceModel');
-let RentPrice = require('../models/rentPriceModel');
+let GasPrice = require('../database/models/gasPriceModel');
+let RentPrice = require('../database/models/rentPriceModel');
 
 /**
  * Post function for Commuter Calculator to get optimal cost

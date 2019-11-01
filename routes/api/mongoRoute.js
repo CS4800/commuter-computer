@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-let GasPrice = require('../../models/gasPriceModel');
-let RentPrice = require('../../models/rentPriceModel');
+let GasPrice = require('../../database/models/gasPriceModel');
+let RentPrice = require('../../database/models/rentPriceModel');
 
 // @route   GET api/default
 // @desc    returns all mongodb collections
