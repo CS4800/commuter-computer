@@ -43,15 +43,16 @@ async function post(req, res) {
 
   // get timezone offset from remote address
   const geo = await google.geocoder(state.remoteAddr); // GPS loc for timezone
-  const tz = await google.timezone(geo['lat'], geo['lng']);
+  const { rawOffset } = await google.timezone(geo['lat'], geo['lng']);
 
   // get next Wednesday and convert startTime/endTime to time since unix epoch
   // with timezone offset
   let wed = util.getNextDay(3);
-  state.startTime = util.getUnixEpoch(wed, state.startTime, -tz['rawOffset']);
-  state.endTime = util.getUnixEpoch(wed, state.endTime, -tz['rawOffset']);
+  state.startTime = util.getUnixEpoch(wed, state.startTime, -rawOffset);
+  state.endTime = util.getUnixEpoch(wed, state.endTime, -rawOffset);
 
-  // get distance and duration from home address to remot address
+  // get distance and duration from home address to remote address
+  // with departure time 1 hour before startTime
   const {
     matrices,
     origin_addresses,
@@ -59,7 +60,7 @@ async function post(req, res) {
   } = await google.distanceMatrix(
     state.homeAddresses[0] + '|' + state.homeAddresses[1],
     state.remoteAddr,
-    Math.round(state.startTime / 1000) // millisec to sec
+    Math.round(state.startTime / 1000) - 3600 // in seconds
   );
   state.matrices = matrices;
 

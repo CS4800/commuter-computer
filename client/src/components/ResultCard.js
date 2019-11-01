@@ -46,13 +46,13 @@ class ResultCard extends Component {
                   {costs.map((cost, i) => (
                     <ListGroupItem key={i} style={{ border: 'none' }}>
                       <span style={this.itemStyle(cost.status)}>
-                        {cost.name}: {cost.value}
+                        {cost.name}: ${cost.value}
                       </span>
                     </ListGroupItem>
                   ))}
                   <ListGroupItem>
                     <span style={this.itemStyle(total.status)}>
-                      {total.name}: {total.value}
+                      {total.name}: ${total.value}
                     </span>
                   </ListGroupItem>
                 </ListGroup>
