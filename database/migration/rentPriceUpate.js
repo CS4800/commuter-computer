@@ -13,25 +13,27 @@ function rentPriceUpdate() {
   return new Promise(async (resolve, reject) => {
     const prices = await zillowRent('CA');
 
-    for (price of prices) {
-      let filter = {
-        state: price.state,
-        city: price.city,
-        metro: price.metro,
-        county: price.county
-      };
+    Promise.all(
+      prices.map(price => {
+        let filter = {
+          state: price.state,
+          city: price.city,
+          metro: price.metro,
+          county: price.county
+        };
 
-      try {
-        await RentPrice.findOneAndUpdate(filter, price, {
+        return RentPrice.findOneAndUpdate(filter, price, {
           new: true,
           upsert: true
         }).exec();
-      } catch (e) {
-        reject(`Mongo update gasPriceModel fail: ${e}`);
-      }
-    }
-    console.log('Mongo updated: rentPriceModel');
-    resolve('Mongo updated: rentPriceModel');
+      })
+    )
+      .then(() => {
+        let msg = 'Mongo updated: rentPriceModel';
+        console.log(msg);
+        resolve(msg);
+      })
+      .catch(e => reject(`Mongo update rentPriceModel fail: ${e}`));
   });
 }
 

@@ -27,22 +27,29 @@ async function post(req, res) {
   };
   let results = null;
 
-  // get zillow rent prices for california, pomona
-  const rent = await RentPrice.findOne({
-    state: 'CA',
-    city: 'Pomona'
-  });
-  state.rent = rent.prices;
+  // wait for all concurrent calls to finish
+  const [rent, gas, geo] = await Promise.all([
+    // get zillow rent prices for california, pomona
+    RentPrice.findOne({
+      state: 'CA',
+      city: 'Pomona'
+    }),
 
-  // get california, la gas prices avg
-  const gas = await GasPrice.findOne({
-    state: 'CA',
-    county: 'Los Angeles-Long Beach'
-  });
+    // get california, la gas prices avg
+    GasPrice.findOne({
+      state: 'CA',
+      county: 'Los Angeles-Long Beach'
+    }),
+
+    // get geo location for timezone
+    google.geocoder(state.remoteAddr)
+  ]);
+
+  // update state's rent/gas
+  state.rent = rent.prices;
   state.gas = gas.prices;
 
-  // get timezone offset from remote address
-  const geo = await google.geocoder(state.remoteAddr); // GPS loc for timezone
+  // get timezone from geo location
   const { rawOffset } = await google.timezone(geo['lat'], geo['lng']);
 
   // get next Wednesday and convert startTime/endTime to time since unix epoch

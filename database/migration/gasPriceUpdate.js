@@ -13,20 +13,22 @@ function gasPriceUpdate() {
   return new Promise(async (resolve, reject) => {
     const prices = await gasPricesByState('CA');
 
-    for (price of prices) {
-      let filter = { state: price.state, county: price.county };
+    Promise.all(
+      prices.map(price => {
+        let filter = { state: price.state, county: price.county };
 
-      try {
-        await GasPrice.findOneAndUpdate(filter, price, {
+        return GasPrice.findOneAndUpdate(filter, price, {
           new: true,
           upsert: true
         }).exec();
-      } catch (e) {
-        reject(`Mongo update gasPriceModel fail: ${e}`);
-      }
-    }
-    console.log('Mongo updated: gasPriceModel');
-    resolve('Mongo updated: gasPriceModel');
+      })
+    )
+      .then(() => {
+        let msg = 'Mongo updated: gasPriceModel';
+        console.log(msg);
+        resolve(msg);
+      })
+      .catch(e => reject(`Mongo update gasPriceModel fail: ${e}`));
   });
 }
 
