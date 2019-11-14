@@ -23,7 +23,7 @@ async function post(req, res) {
     mpg: Number(req.body.mpg),
     gas: null,
     rent: null,
-    matrices: null
+    matrices: []
   };
   let results = null;
 
@@ -58,18 +58,27 @@ async function post(req, res) {
   state.startTime = util.getUnixEpoch(wed, state.startTime, -rawOffset);
   state.endTime = util.getUnixEpoch(wed, state.endTime, -rawOffset);
 
-  // get distance and duration from home address to remote address
+  // get distance and duration from start to remote
   // with departure time 1 hour before startTime
   const {
-    matrices,
-    origin_addresses,
-    destination_addresses
+    matrices: startMatrices,
+    origin_addresses
   } = await google.distanceMatrix(
     state.homeAddresses[0] + '|' + state.homeAddresses[1],
     state.remoteAddr,
     Math.round(state.startTime / 1000) - 3600 // in seconds
   );
-  state.matrices = matrices;
+
+  // get distance and duration from remote to start
+  const { matrices: endMatrices } = await google.distanceMatrix(
+    state.remoteAddr,
+    state.homeAddresses[0] + '|' + state.homeAddresses[1],
+    Math.round(state.endTime / 1000) // in seconds
+  );
+
+  // add to state.matrices in pair of start/end
+  for (let i = 0; i < startMatrices.length; ++i)
+    state.matrices.push({ start: startMatrices[i], end: endMatrices[i] });
 
   // reset home addresses to full addresses from api
   state.homeAddresses[0] = origin_addresses[0] ? origin_addresses[0] : '';
