@@ -1,8 +1,9 @@
-const calculate = require('../lib/calculate');
+const { calculate, calculateSuggestion } = require('../lib/calculate');
 const google = require('../lib/googleAPI');
 const util = require('../lib/util');
 let GasPrice = require('../database/models/gasPriceModel');
 let RentPrice = require('../database/models/rentPriceModel');
+let CityDistance = require('../database/models/cityDistanceModel');
 
 /**
  * Post function for Commuter Calculator to get optimal cost
@@ -23,9 +24,13 @@ async function post(req, res) {
     mpg: Number(req.body.mpg),
     gas: null,
     rent: null,
-    matrices: []
+    matrices: [],
+    suggestedLocations: [],
+    suggestedMatrices: [],
+    suggestedRents: []
   };
-  let results = null;
+  let results = null,
+    suggestedResults = null;
 
   // wait for all concurrent calls to finish
   const [rent, gas, geo] = await Promise.all([
@@ -62,7 +67,8 @@ async function post(req, res) {
   // with departure time 1 hour before startTime
   const {
     matrices: startMatrices,
-    origin_addresses
+    origin_addresses,
+    destination_addresses
   } = await google.distanceMatrix(
     state.homeAddresses[0] + '|' + state.homeAddresses[1],
     state.remoteAddr,
@@ -81,13 +87,51 @@ async function post(req, res) {
     state.matrices.push({ start: startMatrices[i], end: endMatrices[i] });
 
   // reset home addresses to full addresses from api
-  state.homeAddresses[0] = origin_addresses[0] ? origin_addresses[0] : '';
-  state.homeAddresses[1] = origin_addresses[1] ? origin_addresses[1] : '';
+  state.homeAddresses[0] = origin_addresses[0] || state.homeAddresses[0];
+  state.homeAddresses[1] = origin_addresses[1] || state.homeAddresses[1];
+  state.remoteAddr = destination_addresses[0] || state.remoteAddr;
 
   // calculate optimal cost
   results = calculate(state);
 
-  res.json(results);
+  // FIND SUGGESTIONS
+
+  // extract remote address city
+  let split = state.remoteAddr.split(',');
+  let remoteCity = split[split.length - 3].trim();
+
+  // extract state in remote address
+  let remoteState = split[split.length - 2].trim().split(' ')[0];
+
+  // find neareby city in database using remote address's city
+  let nearbyCities = await CityDistance.findOne({
+    state: remoteState,
+    county: 'Los Angeles County',
+    city: remoteCity
+  });
+
+  if (nearbyCities) {
+    for (let i = 0; i < 4; ++i) {
+      let nearbyCity = nearbyCities.distances[i];
+
+      // get distance and duration from start to remote
+      // with departure time 1 hour before startTime
+      const { matrices: startSuggestMatrix } = await google.distanceMatrix(
+        nearbyCity.city,
+        state.remoteAddr,
+        Math.round(state.startTime / 1000) - 3600 // in seconds
+      );
+
+      state.suggestedMatrices.push({
+        start: startSuggestMatrix[0]
+      });
+      state.suggestedLocations.push(nearbyCity.city);
+    }
+
+    suggestedResults = calculateSuggestion(state);
+  }
+
+  res.json({ results: results, suggestions: suggestedResults });
 }
 
 module.exports = {

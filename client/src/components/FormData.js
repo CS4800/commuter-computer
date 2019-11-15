@@ -17,7 +17,7 @@ function FormData(props) {
                 <TextField
                   id='homeAddr1'
                   name='homeAddr1'
-                  label='Home Address'
+                  label='Start Address'
                   type='text'
                   margin='dense'
                   fullWidth
@@ -53,7 +53,7 @@ function FormData(props) {
                 <TextField
                   id='homeAddr2'
                   name='homeAddr2'
-                  label='Second Home Address'
+                  label='Secodary Start Address'
                   type='text'
                   margin='dense'
                   fullWidth
