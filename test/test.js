@@ -23,11 +23,12 @@ describe('ApiRoutes', function() {
         });
     })
     describe('GET mongo routes', function() {
-        it('Given call gas prices, return a json object containing gas prices', function(done) {
+        it('Given a request for gas prices, return a json object containing gas prices', function(done) {
             chai.request(server)
                 .get('/api/mongo/gases')
                 .end((err, res) => {
-                    expect(res).to.have.status('200');
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200);
                     const la_data = res.body.find(function(element) {
                         return element.county === 'Los Angeles-Long Beach'
                     });
@@ -37,6 +38,21 @@ describe('ApiRoutes', function() {
                     expect(la_gas_month_avg.regular).to.equal(4.216)
                     done();
             })
+        })
+        it('Given a request for rents, return rents', function(done) {
+            this.timeout(7000)
+            chai.request(server)
+                .get('/api/mongo/rents')
+                .end((err, res) => {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200)
+                    const pomona_data = res.body.find(
+                        element => element.city == 'Pomona'
+                    )
+                    expect(pomona_data.prices['1Bedroom']).to.be.lt(1400);
+                    expect(pomona_data.prices['1Bedroom']).to.be.gt(1300);
+                    done();
+                })
         })
     })
 })
