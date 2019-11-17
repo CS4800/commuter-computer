@@ -34,7 +34,9 @@ class App extends Component {
       cpp: { lat: 34.0589, lng: -117.8194 },
       center: { lat: 34.0589, lng: -117.8194, zoom: 13 }
     },
-    results: null
+    results: null,
+    suggestions: null,
+    inProgress: false
   };
 
   // handle form change event
@@ -66,9 +68,19 @@ class App extends Component {
   formSubmit = e => {
     e.preventDefault();
 
-    axios
-      .post('/api/com-calc', this.state.formData)
-      .then(res => this.setState({ results: res.data }));
+    this.setState({
+      inProgress: !this.state.inProgress,
+      results: null,
+      suggestions: null
+    });
+
+    axios.post('/api/com-calc', this.state.formData).then(res => {
+      this.setState({
+        results: res.data.results,
+        suggestions: res.data.suggestions,
+        inProgress: !this.state.inProgress
+      });
+    });
 
     // let addrs = [this.state.formData.homeAddr, this.state.formData.remoteAddr];
     // Promise.all(addrs.map(addr => googleGeocoder(addr))).then(coords => {
@@ -97,7 +109,9 @@ class App extends Component {
                   formUpdate={this.formUpdate}
                   formReset={this.formReset}
                   formSubmit={this.formSubmit}
+                  inProgress={this.state.inProgress}
                   results={this.state.results}
+                  suggestions={this.state.suggestions}
                 />
                 <div className='mt-5'></div>
                 {/* <GoogleMap coords={this.state.coords} /> */}

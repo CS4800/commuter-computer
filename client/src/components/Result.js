@@ -6,10 +6,12 @@ import ResultCard from './ResultCard';
 class Result extends Component {
   render() {
     if (this.props.results && this.props.results.length) {
+      let results = this.props.results;
+
       return (
         <React.Fragment>
           <Row form>
-            {this.props.results.map((result, i) => (
+            {results.map((result, i) => (
               <Col key={i} sm>
                 <ResultCard result={result} />
               </Col>
@@ -22,7 +24,7 @@ class Result extends Component {
 }
 
 Result.propTypes = {
-  result: PropTypes.object
+  results: PropTypes.array
 };
 
 export default Result;

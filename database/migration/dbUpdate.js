@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const gasPriceUpdate = require('./gasPriceUpdate');
 const rentPriceUpdate = require('./rentPriceUpate');
+const cityDistanceUpdate = require('./cityDistanceUpdate');
 
 function checkMongoStatus() {
   return new Promise((resolve, reject) => {
@@ -23,7 +24,11 @@ async function dbUpdate() {
     console.log(`Mongo update starting on ${new Date()}`);
 
     Promise.all(updates)
-      .then(() => console.log(`Mongo update finished on ${new Date()}`))
+      .then(async () => {
+        let cityUpdates = await cityDistanceUpdate();
+        console.log(cityUpdates);
+        console.log(`Mongo update finished on ${new Date()}`);
+      })
       .catch(e => console.log(`Mongo update failed on ${new Date()}: ${e}`));
   } else
     console.log(
