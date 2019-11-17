@@ -18,8 +18,25 @@ describe('ApiRoutes', function() {
                 .end((err, res) => {
                     expect(res.body['name']).to.equal('Michael Ackerman');
                     expect(res.body['description']).to.equal('hi, im mac');
+                    done();
                 })
-            done();
         });
+    })
+    describe('GET mongo routes', function() {
+        it('Given call gas prices, return a json object containing gas prices', function(done) {
+            chai.request(server)
+                .get('/api/mongo/gases')
+                .end((err, res) => {
+                    expect(res).to.have.status('200');
+                    const la_data = res.body.find(function(element) {
+                        return element.county === 'Los Angeles-Long Beach'
+                    });
+                    const la_gas_month_avg = la_data.prices.find(function(avgData) {
+                        return avgData.avgType === 'Month Ago Avg.'
+                    })
+                    expect(la_gas_month_avg.regular).to.equal(4.216)
+                    done();
+            })
+        })
     })
 })
