@@ -117,7 +117,7 @@ async function post(req, res) {
       // get distance and duration from start to remote
       // with departure time 1 hour before startTime
       const { matrices: startSuggestMatrix } = await google.distanceMatrix(
-        nearbyCity.city,
+        `${nearbyCity.city}, ${nearbyCities.state}`,
         state.remoteAddr,
         Math.round(state.startTime / 1000) - 3600 // in seconds
       );
