@@ -82,7 +82,7 @@ describe('ApiRoutes', function() {
                     expect(costs[2].name).to.equal('Mortgage Cost')
                     // verify values are correct
                     expect(Number(costs[0].value)).to.be.greaterThan(640)
-                    expect(Number(costs[0].value)).to.be.lessThan(650)
+                    expect(Number(costs[0].value)).to.be.lessThan(660)
                     expect(Number(costs[1].value)).to.greaterThan(75)
                     expect(Number(costs[1].value)).to.lessThan(85)
                     expect(Number(costs[2].value)).to.equal(1500)
