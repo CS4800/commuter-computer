@@ -48,7 +48,7 @@ class ResultCard extends Component {
                     <ListGroupItem key={i} style={{ border: 'none' }}>
                       <ToolTip
                         id={i}
-                        body={`${cost.name}: ${cost.value}`}
+                        body={`${cost.name}: $${cost.value}`}
                         bodyStyle={this.itemStyle(cost.status)}
                         tooltipText={cost.tooltip}
                         placement='top'
