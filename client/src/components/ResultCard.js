@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Spring } from 'react-spring/renderprops';
 import { CardHeader, ListGroup, ListGroupItem } from 'reactstrap';
+import ToolTip from './Tooltip';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { red, green, grey } from '@material-ui/core/colors';
@@ -45,9 +46,13 @@ class ResultCard extends Component {
                 <ListGroup flush>
                   {costs.map((cost, i) => (
                     <ListGroupItem key={i} style={{ border: 'none' }}>
-                      <span style={this.itemStyle(cost.status)}>
-                        {cost.name}: ${cost.value}
-                      </span>
+                      <ToolTip
+                        id={i}
+                        body={`${cost.name}: ${cost.value}`}
+                        bodyStyle={this.itemStyle(cost.status)}
+                        tooltipText={cost.tooltip}
+                        placement='top'
+                      />
                     </ListGroupItem>
                   ))}
                   <ListGroupItem>
