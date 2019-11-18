@@ -55,4 +55,40 @@ describe('ApiRoutes', function() {
                 })
         })
     })
+    describe('POST to form data to commuter calculator api', function() {
+        it('Given form data, return the calucated costs', function(done) {
+            this.timeout(7000)
+            chai.request(server)
+                .post('/api/com-calc')
+                .send({
+                    homeAddr1: '300 E Graves Ave Monterey Park',
+                    homeAddr2: '',
+                    homeCost1: '1500',
+                    homeCost2: '',
+                    remoteAddr: 'Jet Propulsion Laboratory',
+                    startTime: '09:00',
+                    endTime: '17:00',
+                    income: '25',
+                    daysPerWeek: '5',
+                    mpg: '25'
+                })
+                .end((err, res) => {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200)
+                    const costs = res.body.results[0].costs
+                    // verify names are correct
+                    expect(costs[0].name).to.equal('Opportunity Cost')
+                    expect(costs[1].name).to.equal('Gas Cost')
+                    expect(costs[2].name).to.equal('Mortgage Cost')
+                    // verify values are correct
+                    expect(Number(costs[0].value)).to.be.greaterThan(640)
+                    expect(Number(costs[0].value)).to.be.lessThan(650)
+                    expect(Number(costs[1].value)).to.greaterThan(75)
+                    expect(Number(costs[1].value)).to.lessThan(85)
+                    expect(Number(costs[2].value)).to.equal(1500)
+                    done();
+                })
+        })
+    })
+
 })
