@@ -35,12 +35,13 @@ describe('ApiRoutes', function() {
                     const la_gas_month_avg = la_data.prices.find(function(avgData) {
                         return avgData.avgType === 'Month Ago Avg.'
                     })
-                    expect(la_gas_month_avg.regular).to.equal(4.216)
+                    expect(la_gas_month_avg.regular).to.greaterThan(3.0);
+                    expect(la_gas_month_avg.regular).to.lessThan(6.0);
                     done();
             })
         })
         it('Given a request for rents, return rents', function(done) {
-            this.timeout(7000)
+            this.timeout(15000)
             chai.request(server)
                 .get('/api/mongo/rents')
                 .end((err, res) => {
@@ -81,11 +82,11 @@ describe('ApiRoutes', function() {
                     expect(costs[1].name).to.equal('Gas Cost')
                     expect(costs[2].name).to.equal('Mortgage Cost')
                     // verify values are correct
-                    expect(Number(costs[0].value)).to.be.greaterThan(640)
-                    expect(Number(costs[0].value)).to.be.lessThan(660)
-                    expect(Number(costs[1].value)).to.greaterThan(75)
-                    expect(Number(costs[1].value)).to.lessThan(85)
-                    expect(Number(costs[2].value)).to.equal(1500)
+                    expect(Number(costs[0].value)).to.be.greaterThan(630);
+                    expect(Number(costs[0].value)).to.be.lessThan(690);
+                    expect(Number(costs[1].value)).to.greaterThan(70);
+                    expect(Number(costs[1].value)).to.lessThan(90);
+                    expect(Number(costs[2].value)).to.equal(1500);
                     done();
                 })
         })
