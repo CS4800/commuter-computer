@@ -129,6 +129,11 @@ async function post(req, res) {
     }
 
     suggestedResults = calculateSuggestion(state);
+
+    // sort suggested results by total value
+    suggestedResults = suggestedResults.sort(
+      (a, b) => Number(a.total.value) - Number(b.total.value)
+    );
   }
 
   res.json({ results: results, suggestions: suggestedResults });
