@@ -36,7 +36,8 @@ class App extends Component {
     },
     results: null,
     suggestions: null,
-    inProgress: false
+    inProgress: false,
+    stop: false
   };
 
   // handle form change event
@@ -61,7 +62,12 @@ class App extends Component {
   // clear state.formData and state.results
   formReset = e => {
     this.setState({ formData: _.cloneDeep(this.defaultFormData) });
-    this.setState({ results: null });
+    this.setState({
+      results: null,
+      suggestions: null,
+      stop: true,
+      inProgress: false
+    });
   };
 
   // handle form submit event
@@ -69,17 +75,20 @@ class App extends Component {
     e.preventDefault();
 
     this.setState({
-      inProgress: !this.state.inProgress,
       results: null,
-      suggestions: null
+      suggestions: null,
+      inProgress: true,
+      stop: false
     });
 
     axios.post('/api/com-calc', this.state.formData).then(res => {
-      this.setState({
-        results: res.data.results,
-        suggestions: res.data.suggestions,
-        inProgress: !this.state.inProgress
-      });
+      if (!this.state.stop) {
+        this.setState({
+          results: res.data.results,
+          suggestions: res.data.suggestions,
+          inProgress: false
+        });
+      }
     });
 
     // let addrs = [this.state.formData.homeAddr, this.state.formData.remoteAddr];
