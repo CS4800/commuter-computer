@@ -34,11 +34,21 @@ class App extends Component {
       cpp: { lat: 34.0589, lng: -117.8194 },
       center: { lat: 34.0589, lng: -117.8194, zoom: 13 }
     },
+    users: null,
     results: null,
     suggestions: null,
     inProgress: false,
     stop: false
   };
+
+  componentDidMount() {
+    axios
+      .get('/api/users')
+      .then(res => {
+        this.setState({ users: res.data });
+      })
+      .catch(e => console.log(`Could not fetch About user's info: ${e}`));
+  }
 
   // handle form change event
   formChange = e => {
@@ -108,7 +118,7 @@ class App extends Component {
           <Container>
             <Switch>
               <Route path='/about' exact>
-                <About />
+                <About users={this.state.users} />
               </Route>
               <Route path='/' exact>
                 <ComCalc

@@ -4,20 +4,25 @@ const router = express.Router();
 // team members for Baseball Caps
 const users = [
   {
-    name: 'Thuan Tang',
-    description: 'Team member of Baseball Caps for CS4800'
+    name: 'Kevin Young',
+    title: 'Backend developer',
+    description: 'Nodejs backend development and calculation logic'
   },
   {
     name: 'Michael Ackerman',
-    description: 'hi, im mac'
+    title: 'Devop',
+    description: 'Amazon aws, continous integration, and testing'
+  },
+
+  {
+    name: 'Thuan Tang',
+    title: 'Fullstack',
+    description: 'ReactJS frontend with Nodejs setup'
   },
   {
     name: 'Youngjun Woo',
-    description: 'Hi, this is Youngjun Woo'
-  },
-  {
-    name: 'Kevin Young',
-    description: 'Member of team Baseball Caps'
+    title: 'Database and business',
+    description: 'Mongo database and QoS improvements'
   }
 ];
 
