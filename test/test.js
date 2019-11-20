@@ -17,7 +17,10 @@ describe('ApiRoutes', function() {
                 .get('/api/users/mac')
                 .end((err, res) => {
                     expect(res.body['name']).to.equal('Michael Ackerman');
-                    expect(res.body['description']).to.equal('hi, im mac');
+                    expect(res.body['title']).to.not.be.undefined;
+                    expect(res.body['title']).to.not.be.null;
+                    expect(res.body['description']).to.not.be.undefined;
+                    expect(res.body['description']).to.not.be.null;
                     done();
                 })
         });
